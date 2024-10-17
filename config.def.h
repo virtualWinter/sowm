@@ -2,16 +2,18 @@
 #define CONFIG_H
 
 #define MOD Mod4Mask
+#define TH  90
+#define TC  255 + (255<<8) + (255<<16)
 
 const char* menu[]    = {"dmenu_run",      0};
-const char* term[]    = {"st",             0};
+const char* term[]    = {"kitty",             0};
 const char* scrot[]   = {"scr",            0};
 const char* briup[]   = {"bri", "10", "+", 0};
 const char* bridown[] = {"bri", "10", "-", 0};
 const char* voldown[] = {"amixer", "sset", "Master", "5%-",         0};
 const char* volup[]   = {"amixer", "sset", "Master", "5%+",         0};
 const char* volmute[] = {"amixer", "sset", "Master", "toggle",      0};
-const char* colors[]  = {"bud", "/home/goldie/Pictures/Wallpapers", 0};
+const char* colors[]  = {"bud", "/home/vwinter/Pictures/Wallpapers", 0};
 
 static struct key keys[] = {
     {MOD,      XK_q,   win_kill,   {0}},
