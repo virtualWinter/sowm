@@ -71,6 +71,7 @@ This build is configured with the following personalizations (see `config.h`):
 ## Dependencies
 
 - `xlib` (*usually `libX11`*).
+- `xinerama` (*usually `libXinerama`*) — for multi-monitor support.
 
 
 ## Installation
