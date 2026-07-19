@@ -12,7 +12,8 @@
 
 #include "sowm.h"
 
-static client       *list = {0}, *ws_list[10] = {0}, *cur;
+
+static client       *list = 0, *ws_list[10] = {0}, *cur;
 static int          ws = 1, sw, sh, wx, wy, numlock = 0, monitors;
 static unsigned int ww, wh;
 
@@ -65,11 +66,12 @@ void notify_enter(XEvent *e) {
     while(XCheckTypedEvent(d, EnterNotify, e));
     while(XCheckTypedWindowEvent(d, mouse.subwindow, MotionNotify, e));
 
-    for win if (c->w == e->xcrossing.window) win_focus(c);
+    for win { if (c->w == e->xcrossing.window) win_focus(c); }
 }
 
 void notify_motion(XEvent *e) {
-    if (!mouse.subwindow || cur->f) return;
+
+    if (!mouse.subwindow || cur->fs) return;
 
     while(XCheckTypedEvent(d, MotionNotify, e));
 
@@ -139,6 +141,8 @@ void win_del(Window w) {
     if (list == x)    list = x->next;
     if (x->next)      x->next->prev = x->prev;
     if (x->prev)      x->prev->next = x->next;
+
+    if (cur == x) cur = 0;
 
     free(x);
     ws_save(ws);
@@ -253,15 +257,13 @@ void ws_go(const Arg arg) {
     ws_sel(tmp);
 
     for win {
-        char* winame = NULL;
-        if (!XFetchName(d, c->w, &winame) || winame == NULL) {
-            XUnmapWindow(d, c->w);
-        } else {
-            if (strncmp(winame, barname, strlen(barname))) {
-                XUnmapWindow(d, c->w);
-            }
+        char *winame = NULL;
+        int is_bar = 0;
+        if (XFetchName(d, c->w, &winame) && winame != NULL) {
+            if (strncmp(winame, barname, strlen(barname)) == 0) is_bar = 1;
             XFree(winame);
         }
+        if (!is_bar) XUnmapWindow(d, c->w);
     }
 
     ws_sel(arg.i);
@@ -367,14 +369,14 @@ int main(void) {
 
     s = DefaultScreen(d);
     root  = RootWindow(d, s);
-    sw    = XDisplayWidth(d, s);  //- (2*BORDER_WIDTH);
-    sh    = XDisplayHeight(d, s); //- (2*BORDER_WIDTH);
+    sw    = XDisplayWidth(d, s);
+    sh    = XDisplayHeight(d, s);
 
     XSelectInput(d,  root, SubstructureRedirectMask);
     XDefineCursor(d, root, XCreateFontCursor(d, 68));
     input_grab(root);
     win_init();
 
-    while (1 && !XNextEvent(d, &ev)) // 1 && will forever be here.
+    while (!XNextEvent(d, &ev))
         if (events[ev.type]) events[ev.type](&ev);
 }
