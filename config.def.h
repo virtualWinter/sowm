@@ -2,6 +2,15 @@
 #define CONFIG_H
 
 #define MOD Mod4Mask
+
+/* Gap (in pixels) reserved at the top of the screen, e.g. for a status bar.
+   Fullscreen windows are shrunk by this amount so the bar stays visible.
+   Set to 0 for no gap. */
+#define GAP_SIZE 0
+
+/* Name (or name prefix) of a persistent bar window that must NOT be unmapped
+   when switching workspaces (e.g. a lemonbar titled "bar"). */
+const char* barname = "bar";
 #define BORDER_SELECT   "#880000"
 #define BORDER_NORMAL   "#333333"
 #define BORDER_WIDTH    1
