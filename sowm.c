@@ -97,14 +97,8 @@ void key_press(XEvent *e) {
 void button_press(XEvent *e) {
     if (!e->xbutton.subwindow) return;
 
-    /* Click-to-focus: focus and raise the window under the cursor. */
-    for win if (c->w == e->xbutton.subwindow) win_focus(c);
-    XRaiseWindow(d, e->xbutton.subwindow);
-
-    /* Only MOD+click starts a move/resize. */
-    if (mod_clean(e->xbutton.state) != MOD) return;
-
     win_size(e->xbutton.subwindow, &wx, &wy, &ww, &wh);
+    XRaiseWindow(d, e->xbutton.subwindow);
     mouse = e->xbutton;
 }
 
@@ -342,13 +336,6 @@ void input_grab(Window root) {
         for (j = 0; j < sizeof(modifiers)/sizeof(*modifiers); j++)
             XGrabButton(d, i, MOD | modifiers[j], root, True,
                 ButtonPressMask|ButtonReleaseMask|PointerMotionMask,
-                GrabModeAsync, GrabModeAsync, 0, 0);
-
-    /* Plain click (no modifier) also reaches sowm so we can focus-on-click. */
-    for (i = 1; i < 4; i += 2)
-        for (j = 0; j < sizeof(modifiers)/sizeof(*modifiers); j++)
-            XGrabButton(d, i, modifiers[j], root, True,
-                ButtonPressMask,
                 GrabModeAsync, GrabModeAsync, 0, 0);
 
     XFreeModifiermap(modmap);
