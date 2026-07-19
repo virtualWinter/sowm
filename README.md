@@ -47,7 +47,7 @@ Patches available here: https://github.com/dylanaraps/sowm/pulls
 | combo                    | action           | program        |
 | ------------------------ | ---------------- | -------------- |
 | `MOD4` + `Return`        | terminal         | `st`           |
-| `MOD4` + `d`             | dmenu            | `dmenu_run`    |
+| `MOD4` + `d`             | launcher         | `rofi -show run` |
 | `MOD4` + `p`             | scrot            | `scr`          |
 | `MOD4` + `w`             | wallpaper cycler | `bud`          |
 | `XF86_AudioLowerVolume`  | volume down      | `amixer`       |
@@ -55,6 +55,17 @@ Patches available here: https://github.com/dylanaraps/sowm/pulls
 | `XF86_AudioMute`         | volume toggle    | `amixer`       |
 | `XF86_MonBrightnessUp`   | brightness up    | `bri`          |
 | `XF86_MonBrightnessDown` | brightness down  | `bri`          |
+
+
+## My Settings
+
+This build is configured with the following personalizations (see `config.h`):
+
+- **Launcher:** [`rofi`](https://github.com/davatorium/rofi) instead of `dmenu`
+  (`MOD4` + `d` runs `rofi -show run`).
+- **Focus border color:** `#9e46d8` (the upstream default is `#880000`).
+- **Wallpaper directory:** `/home/vwinter/Wallpapers`
+  (cycled with `bud` via `MOD4` + `w`).
 
 
 ## Dependencies
