@@ -1,4 +1,4 @@
-CFLAGS += -std=c99 -Wall -Wextra -pedantic -Wold-style-declaration
+CFLAGS += -std=c11 -Wall -Wextra -pedantic -Wold-style-declaration
 CFLAGS += -Wmissing-prototypes -Wno-unused-parameter
 PREFIX ?= /usr
 BINDIR ?= $(PREFIX)/bin
@@ -6,7 +6,7 @@ CC     ?= gcc
 
 all: sowm
 
-config.h:
+config.h: config.def.h
 	cp config.def.h config.h
 
 sowm: sowm.c sowm.h config.h Makefile
